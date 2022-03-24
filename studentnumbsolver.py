@@ -7,14 +7,20 @@ Arduino.write(studentnumb)
 #print(studentnumb)
 returndata = Arduino.readline()
 print(returndata)
-offset = returndata[23:25]
+offset = returndata.split('*')
+#offset = returndata[23:25] breaks with 1 digit codes
+offset = offset[1]
 offset = int(offset)
+encmsg = returndata.split('*')
+encmsg = encmsg[2]
+encmsg.strip(' ')
 #print(offset)
 result = ''
-for i in range(8):
-	j = i+27
+for i in range(1,len(encmsg)-2):
+	#j = i+27 #works with 2 digit codes
 	#print(returndata[j])
-	chrdec = ord(returndata[j])
+	#chrdec = ord(returndata[j])
+	chrdec = ord(encmsg[i])
 	chrdec = chrdec + offset
 	chrenc = chr(chrdec)
 	#print(chrenc)
